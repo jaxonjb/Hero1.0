@@ -21,12 +21,12 @@ public class EnemyBehavior : MonoBehaviour
         if(collision.tag == "Rocket"){
             SpriteRenderer s = GetComponent<SpriteRenderer>();
             Color c = s.color;
-            const float delta = 0.2f;
+            const float delta = 0.20f;
             c.r -= delta;
             c.a -= delta;
             s.color = c;
             Debug.Log("Plane: Color = " + c);
-            if(c.a <= 0.2f)
+            if(c.a <= 0.3f)
             {
                 Destroy(transform.gameObject);
                 heroGameController.EnemyDestroyed();

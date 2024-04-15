@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Text EnemyKilledText = null;
+    public Text Touched = null;
     public float speed = 10f;
     public float playerRotateSpeed = 90.0f;
     public bool mouseController = true;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     
     // Start is called before the first frame update
-    private int mPlanesTouched = 0;
+    private int PlanesTouched = 0;
 
     private GameController heroGameController = null;
     void Start()
@@ -77,8 +77,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "Enemy"){
             Debug.Log("Here x Plane: OnTriggerEnter2D");
-            mPlanesTouched = mPlanesTouched + 1;
-            EnemyKilledText.text = "Touched(" + mPlanesTouched + ")";
+            PlanesTouched = PlanesTouched + 1;
+            Touched.text = "Touched(" + PlanesTouched + ")";
             Destroy(collision.gameObject);
             heroGameController.EnemyDestroyed();
         }

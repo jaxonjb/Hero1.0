@@ -13,7 +13,7 @@ public class RocketBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        heroGameController = FindObjectOfType<GameController>();
+        heroGameController = FindFirstObjectByType<GameController>();
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class RocketBehavior : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if (collision.tag == "Enemy")
+       if (collision.tag == "Enemy" || collision.tag == "Checkpoint")
         {
             Debug.Log("Here x RocketBehavior: OnTriggerEnter2D");
             heroGameController.RocketDestroyed();

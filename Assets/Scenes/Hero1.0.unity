@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d058b23da7f25478b0893f307301ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyKilledText: {fileID: 2090610332}
+  Touched: {fileID: 2090610332}
   speed: 30
   playerRotateSpeed: 45
   mouseController: 1

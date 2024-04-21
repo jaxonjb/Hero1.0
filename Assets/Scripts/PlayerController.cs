@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private GameController heroGameController = null;
     void Start()
     {
-        heroGameController = FindObjectOfType<GameController>();
+        heroGameController = FindFirstObjectByType<GameController>();
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             mouseController = !mouseController;
-            heroGameController.switchHeroMode();
+            heroGameController.SwitchHeroMode();
         }
         Vector3 pos = transform.position;
         

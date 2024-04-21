@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private int maxPlanes = 10;
+    private int maxPlanes = 1;
     private int numberOfPlanes = 0;
     private int enemiesKilled = 0;
     private int numberOfRockets = 0;
@@ -15,13 +15,14 @@ public class GameController : MonoBehaviour
     public Text EnemyCount = null;
     public Text EnemyDestroyedCount = null;
     public bool isMouse = true;
+    private Vector3[] flagPositions = new Vector3[6];
+    private Vector3[] flagOrigins = new Vector3[6];
 
     // Start is called before the first frame update
     void Start()
     {
-    
+        
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -72,7 +73,7 @@ public class GameController : MonoBehaviour
         ++numberOfRockets;
         RocketCountText.text = "Rockets Count: " + numberOfRockets;
     }
-    public void switchHeroMode()
+    public void SwitchHeroMode()
     {
         if(isMouse == true)
         {
@@ -90,5 +91,21 @@ public class GameController : MonoBehaviour
         }else{
             Time.timeScale = 0;
         }
+    }
+    public Vector3 RespawnCheckpoint(int flagNum){
+        Vector3 newPosition = flagOrigins[flagNum];
+        newPosition.x += Random.Range(-15,15);
+        newPosition.y += Random.Range(-15,15);
+        flagPositions[flagNum] = newPosition;
+        return newPosition;
+    }
+    public void originalPosition(int flagNum, Vector3 flagPos)
+    {
+        flagOrigins[flagNum] = flagPos;
+        flagPositions[flagNum] = flagPos;
+    }
+    public Vector3 GetFlagPos(int Checkpoint)
+    {
+        return flagPositions[Checkpoint];
     }
 }

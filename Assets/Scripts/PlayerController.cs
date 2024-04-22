@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
     private int PlanesTouched = 0;
 
     private GameController heroGameController = null;
+    private CooldownBar cooldownBar;
     void Start()
     {
         heroGameController = FindFirstObjectByType<GameController>();
+        cooldownBar = FindFirstObjectByType<CooldownBar>();
     }
 
     // Update is called once per frame
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             if (time > cooldown)
             {
+                cooldownBar.startCooldown();
                 GameObject r = Instantiate(Resources.Load("Prefabs/Rocket") as GameObject);
                 heroGameController.RocketCreated();
                 r.transform.localPosition = transform.localPosition;
@@ -76,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy"){
-            Debug.Log("Here x Plane: OnTriggerEnter2D");
+            //Debug.Log("Here x Plane: OnTriggerEnter2D");
             PlanesTouched = PlanesTouched + 1;
             Touched.text = "Touched(" + PlanesTouched + ")";
             Destroy(collision.gameObject);

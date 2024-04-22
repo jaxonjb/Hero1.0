@@ -8,6 +8,8 @@ public class EnemyBehavior : MonoBehaviour
     public float rotationSpeed = 45f;
     private int currentCheckPoint;
     private GameController heroGameController = null;
+    private int time = 0;
+    private bool inOrder = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +20,31 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        inOrder = heroGameController.getOrder();
         Vector3 target = heroGameController.GetFlagPos(currentCheckPoint);
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        Vector3 targetDir = target - transform.position;
-        if (Vector3.Dot(transform.up, targetDir) < 0.99f)
-        {
-            // Plane needs to adjust its orientation towards the checkpoint
-            PointAtCheckpoint(currentCheckPoint, targetDir);
+        Debug.Log("Distance: " + Vector3.Distance(transform.position, target));
+        if(Vector3.Distance(transform.position, target) < 15){
+            time = 0;
+            if(inOrder == false){
+                int i = currentCheckPoint;
+                while (i == currentCheckPoint){
+                    currentCheckPoint = Random.Range(0,6);
+                }
+            }else{
+                if(currentCheckPoint == 5){
+                    currentCheckPoint = 0;
+                }else{
+                    currentCheckPoint += 1;
+                }
+            }
         }
+        transform.position += transform.up * speed * Time.deltaTime;
+        //transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        Vector3 targetDir = target - transform.position;
+        Debug.Log("target: " + target);
+        PointAtCheckpoint(currentCheckPoint, targetDir);
+        time++;
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -36,27 +55,20 @@ public class EnemyBehavior : MonoBehaviour
             c.r -= delta;
             c.a -= delta;
             s.color = c;
-            Debug.Log("Plane: Color = " + c);
+            //Debug.Log("Plane: Color = " + c);
             if(c.a <= 0.3f)
             {
                 Destroy(transform.gameObject);
                 heroGameController.EnemyDestroyed();
             }
         }
-        if(collision.tag == "Checkpoint")
-        {
-            if(currentCheckPoint == 5){
-                currentCheckPoint = 0;
-            }else{
-                currentCheckPoint += 1;
-            }
-        }
     }
     private void PointAtCheckpoint(int cp, Vector3 targetDir)
     {
         float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
-        Debug.Log("ANGLE: " + angle);
-        Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = targetRotation;//Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+    
 }
+

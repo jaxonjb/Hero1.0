@@ -30,9 +30,9 @@ public class RocketBehavior : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if (collision.tag == "Enemy" || collision.tag == "Checkpoint")
+       if (collision.tag == "Enemy")
         {
-            Debug.Log("Here x RocketBehavior: OnTriggerEnter2D");
+            //Debug.Log("Here x RocketBehavior: OnTriggerEnter2D");
             heroGameController.RocketDestroyed();
             Destroy(transform.gameObject);  // kills self
         }

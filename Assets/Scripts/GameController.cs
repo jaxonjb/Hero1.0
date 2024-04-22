@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private int maxPlanes = 1;
+    private int maxPlanes = 10;
     private int numberOfPlanes = 0;
     private int enemiesKilled = 0;
     private int numberOfRockets = 0;
@@ -14,7 +14,11 @@ public class GameController : MonoBehaviour
     public Text RocketCountText = null;
     public Text EnemyCount = null;
     public Text EnemyDestroyedCount = null;
-    public bool isMouse = true;
+    public Text CheckpointOrder = null;
+    private string hidden = "";
+    private bool isMouse = true;
+    private bool inOrder = true;
+    private bool isHidden = false;
     private Vector3[] flagPositions = new Vector3[6];
     private Vector3[] flagOrigins = new Vector3[6];
 
@@ -26,6 +30,16 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            isHidden = !isHidden;
+            UpdateCheckpointText();
+        }
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            inOrder = !inOrder;
+            UpdateCheckpointText();
+        }
         if(Input.GetKeyDown(KeyCode.Q))
         {
             pause();
@@ -70,6 +84,7 @@ public class GameController : MonoBehaviour
     }
     public void RocketCreated()
     {
+        
         ++numberOfRockets;
         RocketCountText.text = "Rockets Count: " + numberOfRockets;
     }
@@ -106,6 +121,30 @@ public class GameController : MonoBehaviour
     }
     public Vector3 GetFlagPos(int Checkpoint)
     {
-        return flagPositions[Checkpoint];
+        if(inOrder == true){
+            return flagPositions[Checkpoint];
+        }else{
+            int i = Checkpoint;
+            
+            return flagPositions[i];
+        }
+    }
+    public bool getOrder()
+    {
+        return inOrder;
+    }
+    public bool GetCheckpointHidden()
+    {
+        return isHidden;
+    }
+    private void UpdateCheckpointText()
+    {
+        if(isHidden == true){
+                hidden = "(Hidden)";
+        }else hidden = "";
+        
+        if(inOrder == true){
+                CheckpointOrder.text = "Checkpoints" + hidden + ": Sequential";
+        }else CheckpointOrder.text = "Checkpoints"+ hidden + ": Random";
     }
 }

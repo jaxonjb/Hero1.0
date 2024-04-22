@@ -1,1 +1,1 @@
-WebGL Build: https://jaxonjb.github.io/Hero1.0/
+WebGL Build: https://jaxonjb.github.io/Hero2.0/

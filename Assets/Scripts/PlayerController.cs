@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Text Touched = null;
     public float speed = 10f;
     public float playerRotateSpeed = 90.0f;
     public bool mouseController = true;
@@ -15,7 +14,6 @@ public class PlayerController : MonoBehaviour
 
     
     // Start is called before the first frame update
-    private int PlanesTouched = 0;
 
     private GameController heroGameController = null;
     private CooldownBar cooldownBar;
@@ -75,15 +73,5 @@ public class PlayerController : MonoBehaviour
             }
         }
         transform.position = pos; 
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Enemy"){
-            //Debug.Log("Here x Plane: OnTriggerEnter2D");
-            PlanesTouched = PlanesTouched + 1;
-            Touched.text = "Touched(" + PlanesTouched + ")";
-            Destroy(collision.gameObject);
-            heroGameController.EnemyDestroyed();
-        }
     }
 }

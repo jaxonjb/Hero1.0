@@ -147,4 +147,6 @@ public class GameController : MonoBehaviour
                 CheckpointOrder.text = "Checkpoints" + hidden + ": Sequential";
         }else CheckpointOrder.text = "Checkpoints"+ hidden + ": Random";
     }
+
+
 }
